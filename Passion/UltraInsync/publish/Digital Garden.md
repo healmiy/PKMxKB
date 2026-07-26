@@ -48,6 +48,18 @@ When pulling updates from `https://github.com/oleeskild/digitalgarden`, be aware
 5. **`.eleventy.js`**: Operon tag stripping and task transclusion (embeds).
    - **What changed:** Added custom `markdown-it` core rules near line 163. The `transclude_operon` rule intercepts `[[path#-operonId]]` wikilinks, synchronously fetches the target file from `src/site/notes/`, extracts the specific task by its `operonId`, and directly replaces the wikilink with the raw markdown task text. Then, `strip_operon` silently strips out `{{key:: value}}` metadata tags from the raw markdown.
    - **Why:** This replicates the Obsidian Operon plugin's behavior by turning dead anchor links into basic native checklists on your website, avoiding complex HTML wrappers and styling conflicts while keeping backend parameters hidden.
+6. **`.eleventy.js`**: Internal Link `pathPrefix` fixing.
+   - **What changed:** Added an `applyPathPrefix` helper and wrapped the `href` output of `getAnchorAttributes` to ensure it dynamically injects `process.env.PATH_PREFIX`.
+   - **Why:** The built-in markdown renderer for Canvas and wikilinks bypassed Eleventy's `url` filter. When deployed to a subfolder (`/on/`), internal links in Canvas files were broken (pointing to the root `/` instead of `/on/`). This patch ensures internal links correctly respect the deployment prefix.
+7. **`linkUtils.js` & `.eleventy.js`**: Link Graph standard wikilink extraction.
+   - **What changed:** Updated `wikiLinkRegex` from `/\[\[(.*?\|.*?)\]\]/g` to `/\[\[(.*?)\]\]/g` across the parsing logic.
+   - **Why:** Previously, only aliased wikilinks (with a pipe `|`) were registered as edges in the graph. This fix ensures standard wikilinks `[[Note]]` are accurately captured to populate the link graph.
+8. **`graphScript.njk`**: Subfolder deployment path resolution for Link Graph.
+   - **What changed:** Replaced the hardcoded `fetch('/graph.json')` with `fetch('{{ "/graph.json" | url }}')`, and updated `filterLocalGraphData` to strip `meta.pathPrefix` before performing node lookups.
+   - **Why:** The frontend widget was attempting to fetch graph payloads from the root domain and failing to identify the active node when deployed to `/on/`. This ensures the link graph functions dynamically in subfolder deployments.
+9. **`.eleventy.js`**: Optimized nested Canvas embeds.
+   - **What changed:** Expanded the `canvas-markdown` build transform to intercept any `<iframe class="canvas-file-iframe">` embedding a nested `.canvas` file, swapping it out entirely at build-time with a lightweight blurred placeholder link (`<a class="canvas-placeholder">`).
+   - **Why:** Recursively loading iframes for nested canvases causes massive performance drops and "flickering" UI bugs on the client side. A static placeholder eliminates DOM explosion, improves page load speeds, and boosts SEO while maintaining navigational UX.
 
 ### Note on Upstream Merges:
 - **`package.json`, `.eleventy.js`, and `src/helpers/filetreeUtils.js` contain logic vital for dual deployment.** If updating the digitalgarden repo, manually port these changes to avoid breaking the Adsvise split deployment.
