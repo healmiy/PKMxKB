@@ -1,0 +1,54 @@
+---
+dg-publish: true
+---
+
+
+> [!summary]
+> Git Push ultrainsync.github.io repo will start GitHub workflow of serving GitHub Pages (with no-indexing business and tax folders)
+> run `npm run build:adsvise` and put it inside `/on/` folder inside adsvise.me
+> `npm run dev` will default to GitHub workflow (which is no-indexing `adsvise.me/on` blogpost)
+> >[!info]
+> > compare customized Digital Garden repo with main dev at `.tmp/digitalgarden`
+> 
+> >[!warning]
+> > use `insert margin note + ;;` for sensitive information (it will omit from publishing it)
+
+## Gripes
+### Operon todo
+![[embedding operon task (with its Id) dont show stylized checklist.png]]
+
+## Customizations (Divergence from Upstream)
+
+### 1. Obsidian Plugin (`obsidian-digital-garden`)
+We maintain a custom fork of the Obsidian plugin to enforce a strict security boundary for transclusions.
+- **Why:** The upstream plugin blindly resolves all embeds, meaning if you embedded a private file inside a public file, the private file's contents would leak into the static site.
+- **Our Fix:** Modified `src/compiler/GardenPageCompiler.ts` so that if an embedded file is not marked for publishing, it intercepts the embed and replaces it with a beautiful, natively-styled `Protected block` UI lock box.
+- **Maintenance:** We bumped the version to `99.99.99` in `manifest.json` to prevent Obsidian from auto-overwriting it. If you ever want to update the plugin from upstream, you must pull from the main repo, re-apply the patch in `GardenPageCompiler.ts`, build with `npm run build`, and copy `main.js` and `manifest.json` back to your `.obsidian/plugins/digitalgarden` folder.
+
+### 2. Static Site Template (`ultrainsync.github.io`)
+When pulling updates from `https://github.com/oleeskild/digitalgarden`, be aware of the following local customizations we've made to support dual deployment (`ultrainsync.github.io` and `adsvise.me/on/`).
+
+**Date:** July 26, 2026
+**Conversation ID:** 902be4ad-e781-42a1-91d2-67c77defc3e7
+**Haft Decisions:** `prob-20260725-a2fdb368`, `dec-20260725-27f791ac`
+
+### Changes Made:
+1. **`.eleventy.js`**: Added dynamic `pathPrefix` injection.
+   - **What changed:** Appended `pathPrefix: process.env.PATH_PREFIX || "/",` to the returned configuration object at the end of the file.
+   - **Why:** Allows Eleventy 3.0's HTML Base Plugin to automatically rewrite all `href` and `src` paths in the generated HTML based on the deployment target (e.g., prepending `/on/` for adsvise.me).
+2. **`package.json`**: Added custom dev and build scripts.
+   - **What changed:** Added `"build:adsvise": "cross-env PATH_PREFIX=/on/ npm-run-all get-theme build:sass build:eleventy"` and `"dev:adsvise": "cross-env PATH_PREFIX=/on/ npm-run-all get-theme build:sass --parallel watch:*"` to the `scripts` object.
+   - **Why:** Used to build and preview the site targeting the subfolder deployment (Adsvise) with the correct `PATH_PREFIX` environment variable.
+3. **`src/site/_data/meta.js` & `src/site/_includes/components/pageheader.njk`**: Added Conditional SEO NoIndex.
+   - **What changed:** Exported `pathPrefix` in `meta.js` and added Jinja if-statements in `pageheader.njk` to inject `<meta name="robots" content="noindex, nofollow">`.
+   - **Why:** Prevents duplicate content SEO penalties. Prime/Public rank on Github Pages; Profession/Passion rank on Adsvise.me.
+4. **`src/helpers/filetreeUtils.js`**: Dynamic File Tree Hiding.
+   - **What changed:** Intercepted the `getFileTree(data)` function to check the `note.filePathStem`. If `process.env.PATH_PREFIX === '/on/'` (Adsvise), it skips adding notes from `on/Prime` and `on/Public` to the tree. If it's Github Pages, it skips `on/Passion` and `on/Profession`.
+   - **Why:** This hides the irrelevant folders from the left sidebar UI, while respecting the Obsidian Path Rewrite rules, and without needing to physically ignore files during Eleventy build (which would break search/graph).
+5. **`.eleventy.js`**: Operon tag stripping and task transclusion (embeds).
+   - **What changed:** Added custom `markdown-it` core rules near line 163. The `transclude_operon` rule intercepts `[[path#-operonId]]` wikilinks, synchronously fetches the target file from `src/site/notes/`, extracts the specific task by its `operonId`, and directly replaces the wikilink with the raw markdown task text. Then, `strip_operon` silently strips out `{{key:: value}}` metadata tags from the raw markdown.
+   - **Why:** This replicates the Obsidian Operon plugin's behavior by turning dead anchor links into basic native checklists on your website, avoiding complex HTML wrappers and styling conflicts while keeping backend parameters hidden.
+
+### Note on Upstream Merges:
+- **`package.json`, `.eleventy.js`, and `src/helpers/filetreeUtils.js` contain logic vital for dual deployment.** If updating the digitalgarden repo, manually port these changes to avoid breaking the Adsvise split deployment.
+- **Only `pageheader.njk` was modified among templates.** If upstream templates (`.njk` files) change, you can merge them safely without worrying about hardcoded paths breaking our subfolder deployment, as long as the `pathPrefix` config in `.eleventy.js` remains intact. Be careful not to overwrite the SEO logic in `pageheader.njk`.

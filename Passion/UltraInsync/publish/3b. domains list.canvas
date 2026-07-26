@@ -1,0 +1,56 @@
+{
+	"nodes":[
+		{
+			"id":"8fba1fda4234a737",
+			"type":"text",
+			"text":"###### dev\ndsvi.se\nadsvi.se\nadsvise.me\n",
+			"styleAttributes":{"textAlign":"center"},
+			"x":80,
+			"y":-440,
+			"width":180,
+			"height":120
+		},
+		{
+			"id":"ec63b5c7fcbafce8",
+			"type":"text",
+			"text":"###### Prod\nadsvise.llc\ntaxless.my",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-120,
+			"y":-440,
+			"width":140,
+			"height":100
+		},
+		{
+			"id":"795645edb439db7c",
+			"type":"text",
+			"text":"domains",
+			"styleAttributes":{"textAlign":"center"},
+			"x":0,
+			"y":-540,
+			"width":140,
+			"height":60
+		}
+	],
+	"edges":[
+		{
+			"id":"01728070e3541cec",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"795645edb439db7c",
+			"fromSide":"bottom",
+			"toNode":"8fba1fda4234a737",
+			"toSide":"top"
+		},
+		{
+			"id":"af4963684177460a",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"795645edb439db7c",
+			"fromSide":"bottom",
+			"toNode":"ec63b5c7fcbafce8",
+			"toSide":"top"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{"dg-publish":true}
+	}
+}

@@ -1,0 +1,98 @@
+{
+	"nodes":[
+		{
+			"id":"9d21cf7d02f2ffda",
+			"type":"text",
+			"text":"Muslim bin Hajjaj al-Qusyairi al-Naisaburi, Sahih Muslim. (Beirut: Dar Ihya’ al-Turath) Jld. 4 Hlm. 2299",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-540,
+			"y":-220,
+			"width":360,
+			"height":80
+		},
+		{
+			"id":"c7aa218c4aa918c7",
+			"type":"text",
+			"text":"Ashab al-Ukhdud iaitu mereka yang menggali parit (Surah al-Burj 4-7)",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-500,
+			"y":-380,
+			"width":280,
+			"height":80
+		},
+		{
+			"id":"c0fa2e5113c23a0c",
+			"type":"text",
+			"text":"Zur‘ah Zu Nuwas bin <br>Tubban As‘ad",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-480,
+			"y":-60,
+			"width":260,
+			"height":60
+		},
+		{
+			"id":"3c708cf9dcf68c3f",
+			"type":"text",
+			"text":" mereka yang beriman kepada Allah SWT.",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-460,
+			"y":100,
+			"width":220,
+			"height":100
+		},
+		{
+			"id":"c4e9143a40944b09",
+			"type":"text",
+			"text":"Abdullah bin Thamir, beliau dibunuh kerana mempertahankan imannya.",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-470,
+			"y":300,
+			"width":240,
+			"height":100
+		},
+		{"id":"e5c98ee63dc24ad8","type":"link","url":"https://www.youtube.com/watch?v=V_wkOQ66RJI","x":-100,"y":-300,"width":360,"height":240},
+		{
+			"id":"e423a8e14ae6d8ec",
+			"type":"text",
+			"text":"test",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-140,
+			"y":100,
+			"width":140,
+			"height":60
+		}
+	],
+	"edges":[
+		{
+			"id":"173794c3317fb167",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"c7aa218c4aa918c7",
+			"fromSide":"bottom",
+			"toNode":"9d21cf7d02f2ffda",
+			"toSide":"top",
+			"label":"commentary (based on Suhaib RA)"
+		},
+		{
+			"id":"a40af80c9c8461e5",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"c0fa2e5113c23a0c",
+			"fromSide":"bottom",
+			"toNode":"3c708cf9dcf68c3f",
+			"toSide":"top",
+			"label":"untuk membakar"
+		},
+		{
+			"id":"e7b71328889fd603",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"3c708cf9dcf68c3f",
+			"fromSide":"bottom",
+			"toNode":"c4e9143a40944b09",
+			"toSide":"top",
+			"label":"martyr"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{"dg-publish":true}
+	}
+}
