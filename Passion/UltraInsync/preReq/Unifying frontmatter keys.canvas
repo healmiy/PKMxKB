@@ -327,28 +327,6 @@
 			"color":"2"
 		},
 		{
-			"id":"6f823adf981732c3",
-			"type":"text",
-			"text":"Duration\n_shown below date_",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-206,
-			"y":-378,
-			"width":191,
-			"height":70,
-			"color":"#e08aff"
-		},
-		{
-			"id":"2285293f97df4f3b",
-			"type":"text",
-			"text":"When (created)\n_date besides title_",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-418,
-			"y":-378,
-			"width":171,
-			"height":70,
-			"color":"#88d02f"
-		},
-		{
 			"id":"f33a647894b135e2",
 			"type":"text",
 			"text":"Progress Stage\n_(Zero/Author/House/Press)_",
@@ -442,7 +420,29 @@
 			"height":60,
 			"color":"5"
 		},
-		{"id":"f4b1abab25b4eecf","type":"file","file":"on/Passion/UltraInsync/1 create Operon task file template.md","x":-240,"y":-940,"width":514,"height":405,"color":"3"}
+		{"id":"f4b1abab25b4eecf","type":"file","file":"on/Passion/UltraInsync/1 create Operon task file template.md","x":-240,"y":-940,"width":514,"height":405,"color":"3"},
+		{
+			"id":"6f823adf981732c3",
+			"type":"text",
+			"text":"Duration\n_shown below date_",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-206,
+			"y":-368,
+			"width":191,
+			"height":70,
+			"color":"#e08aff"
+		},
+		{
+			"id":"2285293f97df4f3b",
+			"type":"text",
+			"text":"When (created)\n_date besides title_",
+			"styleAttributes":{"textAlign":"center"},
+			"x":-418,
+			"y":-368,
+			"width":171,
+			"height":70,
+			"color":"#88d02f"
+		}
 	],
 	"edges":[
 		{

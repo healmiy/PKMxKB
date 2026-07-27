@@ -36,8 +36,10 @@ tags:
 dg-publish: true
 canvas:
   - "[[3a1. SyncThings Setup.canvas]]"
+  - "[[3a. where to publish ultrainsync notes.canvas]]"
 3a1. SyncThings Setup: []
-Chapter: 3a1. SyncThings Setup
+Chapter: 3a1. SyncThings Setup, 3a. where to publish ultrainsync notes
+3a. where to publish ultrainsync notes: []
 ---
 
 ## Must have:

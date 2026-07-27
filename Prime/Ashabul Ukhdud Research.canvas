@@ -50,17 +50,7 @@
 			"width":240,
 			"height":100
 		},
-		{"id":"e5c98ee63dc24ad8","type":"link","url":"https://www.youtube.com/watch?v=V_wkOQ66RJI","x":-100,"y":-300,"width":360,"height":240},
-		{
-			"id":"e423a8e14ae6d8ec",
-			"type":"text",
-			"text":"test",
-			"styleAttributes":{"textAlign":"center"},
-			"x":-140,
-			"y":100,
-			"width":140,
-			"height":60
-		}
+		{"id":"e5c98ee63dc24ad8","type":"link","url":"https://www.youtube.com/watch?v=V_wkOQ66RJI","x":-100,"y":-300,"width":360,"height":240}
 	],
 	"edges":[
 		{
