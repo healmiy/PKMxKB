@@ -118,3 +118,67 @@ paste 👇
 	- [x] iPadM3mi
 
 ![[4 Sync-thing PKMxKB folder to all devices#Devices]]
+
+## Lute Language Learning
+```
+sudo apt update && sudo apt install -y 
+sudo apt install python3.10-venv
+pip install --upgrade lute3
+python -m lute.main
+```
+
+`sudo nano /etc/systemd/system/lute.service`
+```bash
+[Unit]
+Description=Lute Language Tracker
+After=network.target
+
+[Service]
+User=healmiy
+WorkingDirectory=/home/healmiy/my_lute
+ExecStart=/home/healmiy/my_lute/myenv/bin/python -m lute.main
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable lute.service
+sudo systemctl start lute.service
+
+sudo systemctl status lute.service
+sudo systemctl stop lute.service
+sudo systemctl disable lute.service
+```
+
+
+### Database restores (dev on M2AirMie to NerdRack)
+To find the directory where your database is, start Lute and go to About > Version and Software Info. It’s the “Data path” line. 
+```
+Version: 3.10.3
+Data path: /home/healmiy/.local/share/Lute3
+Database: /home/healmiy/.local/share/Lute3/lute.db
+```
+tldr: you replace your database with an unzipped and renamed db backup. 
+
+**1. Go to the correct folder:** make sure we were in the main Lute data folder, not the backups subfolder.
+```bash
+cd /home/healmiy/.local/share/Lute3
+```
+
+**2. Rename the current database:** Just in case something went wrong, I renamed the active (empty) database to get it out of the way safely.
+```bash
+mv lute.db old_lute.db
+```
+
+**3. Unzip your backup into place:** I took the backup file you linked and extracted it directly into the Lute data folder, saving the extracted contents as a new file named `lute.db`.
+```bash
+gunzip -c /home/healmiy/PKMxKB/_Config/Lute/manual_lute_backup_2026-07-28_024311.db.gz > lute.db
+```
+
+_(The `-c` flag tells `gunzip` to extract the file to the terminal output rather than replacing the original `.gz` file, and `> lute.db` grabs that output and saves it into the active database file Lute expects)._
+
+Once I put the file in the exact right place with the exact right name, all you had to do was run `sudo systemctl restart lute.service` so Lute could detect the newly swapped file!
