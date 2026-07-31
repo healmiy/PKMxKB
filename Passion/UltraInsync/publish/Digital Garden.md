@@ -63,6 +63,19 @@ When pulling updates from `https://github.com/oleeskild/digitalgarden`, be aware
    - **What changed:** Expanded the `canvas-markdown` build transform to intercept any `<iframe class="canvas-file-iframe">` embedding a nested `.canvas` file, swapping it out entirely at build-time with a lightweight blurred placeholder link (`<a class="canvas-placeholder">`).
    - **Why:** Recursively loading iframes for nested canvases causes massive performance drops and "flickering" UI bugs on the client side. A static placeholder eliminates DOM explosion, improves page load speeds, and boosts SEO while maintaining navigational UX.
 
-### Note on Upstream Merges:
-- **`package.json`, `.eleventy.js`, and `src/helpers/filetreeUtils.js` contain logic vital for dual deployment.** If updating the digitalgarden repo, manually port these changes to avoid breaking the Adsvise split deployment.
-- **Only `pageheader.njk` was modified among templates.** If upstream templates (`.njk` files) change, you can merge them safely without worrying about hardcoded paths breaking our subfolder deployment, as long as the `pathPrefix` config in `.eleventy.js` remains intact. Be careful not to overwrite the SEO logic in `pageheader.njk`.
+### SOP: How to Safely Update the Template (Upstream Merges)
+**CRITICAL**: DO NOT use the Obsidian Digital Garden plugin's "Update Template" button. It generates a PR that force-overwrites all customized files (like `.eleventy.js`, `.njk`, and `.scss`) back to the stock state, which will destroy our dual deployment, Operon transclusions, and custom SEO logic.
+
+To safely update the template from [Upstream Tags](https://github.com/oleeskild/digitalgarden/tags):
+1. **Fetch Upstream**: Ensure the upstream remote is tracked and fetch the latest tags via the terminal.
+   ```bash
+   git remote add upstream https://github.com/oleeskild/digitalgarden.git
+   git fetch upstream --tags
+   ```
+2. **Merge the Tag**: Use Git to merge the specific release tag (e.g., `1.81.6`) into our main branch.
+   ```bash
+   git merge refs/tags/1.81.6
+   ```
+3. **Resolve Conflicts Carefully**: Git will successfully auto-merge core files we haven't touched. However, it will throw a merge conflict for files we have heavily customized. When resolving conflicts in these files, you must manually merge the code to ensure our custom logic remains intact while adopting the upstream dev's bug fixes:
+   - **`.eleventy.js`**, **`package.json`**, and **`src/helpers/filetreeUtils.js`**: These contain logic vital for dual deployment (`PATH_PREFIX`).
+   - **`pageheader.njk`**: Contains custom conditional SEO NoIndex logic.
