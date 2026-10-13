@@ -162,9 +162,9 @@ Operon serves as the primary task state machine for the **PKMxKB Aigent Executio
 ```mermaid
 flowchart TD
     A["1. Handoff Check (git status)"] --> B["2. Operon Inception (operon task get)"]
-    B --> C["3. Context Query (ByteRover / Haft)"]
+    B --> C["3. Context Query (Memory Hub / Haft)"]
     C --> D["4. Execution (operon task update -> Default.Working)"]
-    D --> E["5. Knowledge Distillation (Remembyte / Haft)"]
+    D --> E["5. Knowledge Distillation (Memory Hub / Haft)"]
     E --> F["6. Task Close-Out (operon task complete)"]
     F --> G["7. Pre-flight & Commit (pre-flight-check.sh)"]
 ```
